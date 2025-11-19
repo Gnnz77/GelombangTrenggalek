@@ -1,0 +1,43 @@
+/* 🧭 =========================================================
+   NAVBAR STYLING — belum dipakai, bisa ditambahkan class="navbar"
+   pada elemen <nav> jika ingin efek blur transparan
+   ========================================================= */
+.navbar {
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ✨ =========================================================
+   ANIMASI FADE-IN DROPDOWN — dipakai saat menu mobile muncul
+   ========================================================= */
+@keyframes fadeInDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInDrop 0.3s ease forwards;
+}
+
+/* 🌈 =========================================================
+   ANIMASI BACKGROUND GRADASI — Dipakai di <body>
+   Efek: latar belakang bergerak lembut warna hijau
+   ========================================================= */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

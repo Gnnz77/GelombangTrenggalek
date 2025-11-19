@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gelombang Trenggalek</title>
+    <!-- Logo favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assests/img/Gelombang-laut.png"
+      sizes="32x32"
+    />
+    <meta
+      name="description"
+      content="Panduan wisata pantai Trenggalek — rekomendasi, galeri, dan rute."
+    />
+    <!-- Tailwind Play CDN (cepat untuk prototyping) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Simple custom styles & animations -->
+<style>
+  /* === ✨ ANIMASI SHIMMER UNTUK TOMBOL / CTA === */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  .shimmer {
+    /* Efek cahaya berjalan */
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  /* === 🧩 ANIMASI SLIDE DOWN UNTUK MENU MOBILE === */
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-slide-down {
+    animation: slideDown 0.35s ease forwards;
+  }
+
+  /* === 🪟 LIGHTBOX BACKDROP (LAPISAN GELAP) === */
+  .lb-backdrop {
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  /* === 🪶 EFEK HOVER UNTUK KARTU === */
+  .card-hover:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.12);
+  }
+
+  /* === 🖼️ GAMBAR AGAR COVER PENUH === */
+  .img-cover {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* === 🖱️ CUSTOM SCROLLBAR (TIPIS & RAPIH) === */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 6px; /* Ketebalan scroll horizontal */
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Track transparan */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(107, 114, 128, 0.6); /* Warna abu transparan */
+    border-radius: 9999px; /* Ujung bulat penuh */
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(107, 114, 128, 0.8);
+  }
+
+  /* Untuk Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(107, 114, 128, 0.6) transparent;
+  }
+
+  /* === 🔄 ANIMASI AUTO SCROLL UNTUK SLIDER === */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* Geser separuh lebar container */
+    }
+  }
+  .animate-scroll {
+    animation: scroll 20s linear infinite;
+  }
+
+    html {
+    scroll-behavior: smooth;
+  }
+
+  /* === 📱 PENYESUAIAN RESPONSIF UNTUK MOBILE === */
+  @media (max-width: 640px) {
+    /* Hero Section */
+    main section:first-of-type h1 {
+      font-size: 1.8rem;
+      line-height: 1.3;
+    }
+    main section:first-of-type p {
+      font-size: 0.9rem;
+    }
+    main section:first-of-type .flex.gap-3 a {
+      flex: 1 1 auto;
+      text-align: center;
+    }
+
+    /* Hero image */
+    main section:first-of-type img {
+      height: 220px !important;
+    }
+
+    /* Heading Section */
+    section h2,
+    section h4 {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    /* Kartu destinasi */
+    #destinasi .flex.space-x-6 {
+      gap: 1rem;
+      padding-left: 0.25rem;
+    }
+    #destinasi article {
+      min-width: 200px;
+    }
+    #destinasi p {
+      font-size: 0.8rem;
+    }
+
+    /* Galeri */
+    #galeri img {
+      width: 5.5rem !important;
+      height: 5.5rem !important;
+    }
+
+    /* Rute */
+    #pantaiSelect {
+      font-size: 0.85rem;
+      padding: 0.6rem;
+    }
+    #pantaiMap {
+      height: 250px !important;
+    }
+
+    /* Fix tampilan Maps di mode mobile */
+@media (max-width: 640px) {
+  #pantaiMap {
+    width: 100%;
+    height: 400px !important; /* lebih tinggi agar tidak kepotong */
+  }
+
+  /* pastikan container map menyesuaikan juga */
+  #pantaiMap + div,
+  #pantaiMap,
+  #pantaiMap iframe,
+  .w-full.h-80 {
+    height: auto !important;
+    min-height: 400px !important; /* jaga agar tinggi map cukup */
+  }
+}
+
+    /* Tips Section */
+    section:last-of-type .flex {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    section:last-of-type h3 {
+      font-size: 1.1rem;
+    }
+    section:last-of-type ul {
+      font-size: 0.85rem;
+    }
+  }
+</style>
+  </head>
+  <body class="bg-gradient-to-b from-sky-50 to-white text-slate-800">
+    <!-- NAVBAR -->
+<header
+  class="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200"
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-3">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-white border-2 border-blue-500 flex items-center justify-center shadow-md relative"
+          >
+            <img
+              src="./assests/img/Gelombang-laut.png"
+              alt="Logo Gelombang Laut"
+              class="w-6 h-6 relative z-10"
+            />
+          </div>
+          <div>
+            <a
+              href="index.html"
+              class="text-lg font-extrabold tracking-tight text-slate-800 hover:text-blue-600 transition-colors duration-300"
+            >
+              Gelombang Trenggalek
+            </a>
+            <div class="text-xs text-slate-500 -mt-0.5">
+              Wisata Pantai & Pesisir
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html" class="hover:text-blue-400">Beranda</a>
+        <a href="tentang.html" class="hover:text-blue-400">Tentang</a>
+        <a href="kontak.html" class="hover:text-blue-400">Kontak</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+        <button id="btnMenu" class="p-2 rounded-md hover:bg-blue-50 transition">
+          <svg
+            id="iconMenu"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div
+    id="mobileMenu"
+    class="md:hidden hidden border-t border-blue-100 bg-white shadow-md"
+  >
+    <div class="px-4 py-3 space-y-3 text-blue-600">
+      <a href="index.html" class="block hover:text-blue-400 transition">Beranda</a>
+      <a href="tentang.html" class="block hover:text-blue-400 transition">Tentang</a>
+      <a href="kontak.html" class="block hover:text-blue-400 transition">Kontak</a>
+    </div>
+  </div>
+</header>
+
+    <!-- HERO -->
+    <main class="pt-10">
+      <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <!-- left: teks -->
+          <div class="order-2 lg:order-1">
+            <div class="inline-flex items-center gap-3 mb-4">
+              <span
+                class="px-3 py-1 rounded-full bg-blue-200 text-blue-800 text-sm font-semibold"
+                >#JelajahTrenggalek</span
+              >
+              <span class="text-xs text-slate-400"
+                >Pantai • Eksplore • Santai</span
+              >
+            </div>
+
+            <h1
+              class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight"
+            >
+              Pesona
+              <span
+                class="bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-500 to-blue-300"
+                >Pantai Trenggalek</span
+              ><br />
+              — Laut, Tebing & Senja yang Memikat
+            </h1>
+
+            <p class="mt-4 text-slate-600 max-w-xl">
+              Koleksi pantai indah di pesisir Trenggalek: pasir, tebing, spot
+              sunrise & sunset, serta pantai tersembunyi untuk petualangan yang
+              tenang.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a
+                href="#destinasi"
+                class="inline-block px-5 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-700 to-blue-400 text-white shadow-lg shimmer"
+                >🌊 Lihat Destinasi</a
+              >
+              <a
+                href="#galeri"
+                class="inline-block px-4 py-3 rounded-lg text-sm border border-blue-400 text-blue-800 hover:bg-blue-100"
+                >Galeri Foto</a
+              >
+            </div>
+          </div>
+
+          <!-- right: hero image -->
+<div class="order-1 lg:order-2">
+  <div
+    class="relative rounded-2xl overflow-hidden shadow-2xl group transition-all duration-500 ease-out hover:shadow-blue-300/40"
+  >
+    <img
+      src="./assests/img/Pantai.png"
+      alt="Pantai"
+      class="w-full h-80 sm:h-96 object-cover transform transition-transform duration-700 ease-out group-hover:scale-105"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent transition-opacity duration-700 group-hover:from-black/50"
+    ></div>
+    <div class="absolute left-6 bottom-6 text-white transition-all duration-500 ease-out group-hover:translate-y-[-4px]">
+      <div class="text-sm font-semibold">Pantai Trenggalek</div>
+      <div class="text-xs opacity-80">
+        Nikmati debur ombak & pemandangan tebing
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- DESTINASI (cards) -->
+      <section id="destinasi" class="mt-14 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-bold text-xl mb-5 text-blue-700">🏖️ Destinasi Pantai</h2>
+          <p class="text-sm text-blue-500 italic flex items-center gap-1">
+            Geser untuk melihat semua pantai →
+          </p>
+        </div>
+
+        <div class="flex space-x-6 overflow-x-auto pb-4 custom-scrollbar">
+          <!-- Card 1 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiKaranggongso/PantaiKaranggongso-1.jpg"
+                alt="Pantai Karanggongso"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Karanggongso</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Tebing eksotis, spot sunrise memukau, dan jalan setapak
+                menantang menuju pantai.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-karanggongso.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiPrigi/PantaiPrigi-1.jpg"
+                alt="Pantai Prigi"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Prigi</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Nikmati pasir lembut, ikan segar di pasar, dan sunset romantis.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-prigi.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiMutiara/PantaiMutiara-1.jpg"
+                alt="Pantai Mutiara"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Mutiara</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Pantai berpasir putih dengan air jernih, ombak tenang, dan
+                suasana menenangkan.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-mutiara.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiKonang/PantaiKonang-1.jpg"
+                alt="Pantai Konang"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Konang</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Tebing indah, pasir keemasan, dan sunrise yang memukau.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-konang.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiBlado/PantaiBlado-1.jpg"
+                alt="Pantai Blado"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Blado</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Hamparan pasir putih, ombak lembut, dan udara segar yang
+                menenangkan.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-blado.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiTamanKili-Kili/PantaiTamanKili-Kili-1.jpg"
+                alt="Pantai Taman Kili-Kili"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Taman Kili-Kili</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Pantai alami, tempat penyu bertelur, dengan pemandangan laut
+                yang tenang.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-taman-kili-kili.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 7 -->
+          <article
+            class="min-w-[250px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition flex-shrink-0"
+          >
+            <div class="h-44 w-full overflow-hidden">
+              <img
+                src="./assests/img/PantaiKebo/PantaiKebo-1.jpg"
+                alt="Pantai Kebo"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold">Pantai Kebo</h3>
+              <p class="text-xs text-slate-500 mt-1">
+                Pantai tersembunyi dengan pasir lembut dan suasana damai alami.
+              </p>
+              <div class="mt-3 flex items-center justify-between">
+                <button
+                  onclick="window.location.href='pantai-kebo.html'"
+                  class="text-sm px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Detail
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- GALERI -->
+ <section id="galeri" class="mt-14 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="font-bold text-xl mb-5 text-blue-700">
+   📷 Galeri Pantai
+    </h2>
+<p class="text-sm text-blue-500 italic flex items-center gap-1">
+  Pesona pantai Trenggalek →
+</p>
+  </div>
+
+  <div class="overflow-hidden relative rounded-2xl bg-gradient-to-r from-blue-50 via-white to-blue-50 p-4 shadow-inner">
+    <div class="flex animate-scroll space-x-4 hover:pause">
+            <!-- duplicate images untuk looping -->
+            <img
+              src="./assests/img/PantaiBlado/PantaiBlado-1.jpg"
+              alt="Pantai 1"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiBlado/PantaiBlado-2.jpg"
+              alt="Pantai 2"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKaranggongso/PantaiKaranggongso-1.jpg"
+              alt="Pantai 3"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKaranggongso/PantaiKaranggongso-2.jpg"
+              alt="Pantai 4"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKaranggongso/PantaiKaranggongso-3.jpg"
+              alt="Pantai 5"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKebo/PantaiKebo-1.jpg"
+              alt="Pantai 6"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKebo/PantaiKebo-2.jpg"
+              alt="Pantai 7"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKebo/PantaiKebo-3.jpg"
+              alt="Pantai 8"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKonang/PantaiKonang-1.jpg"
+              alt="Pantai 9"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKonang/PantaiKonang-2.jpg"
+              alt="Pantai 10"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiKonang/PantaiKonang-3.jpg"
+              alt="Pantai 11"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-1.jpg"
+              alt="Pantai 12"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-2.jpg"
+              alt="Pantai 13"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-3.jpg"
+              alt="Pantai 14"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-4.jpg"
+              alt="Pantai 15"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-5.jpg"
+              alt="Pantai 16"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiMutiara/PantaiMutiara-6.jpg"
+              alt="Pantai 17"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiPrigi/PantaiPrigi-1.jpg"
+              alt="Pantai 18"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiPrigi/PantaiPrigi-2.jpg"
+              alt="Pantai 19"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiPrigi/PantaiPrigi-3.jpg"
+              alt="Pantai 20"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiPrigi/PantaiPrigi-4.jpg"
+              alt="Pantai 21"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiTamanKili-Kili/PantaiTamanKili-Kili-1.jpg"
+              alt="Pantai 22"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiTamanKili-Kili/PantaiTamanKili-Kili-2.jpg"
+              alt="Pantai 23"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+            <img
+              src="./assests/img/PantaiTamanKili-Kili/PantaiTamanKili-Kili-3.jpg"
+              alt="Pantai 24"
+              class="w-40 h-40 object-cover rounded-xl shadow-md transform transition-all duration-500 ease-out hover:scale-110 hover:shadow-blue-300/50 hover:brightness-110"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- RUTE (placeholder map) -->
+      <section class="mt-14 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="rounded-3xl overflow-hidden shadow-xl bg-gradient-to-b from-white to-blue-50 p-6 transition-transform hover:scale-105 duration-300"
+        >
+          <h4 class="font-bold text-xl mb-5 text-blue-700">
+            🗺️ Pilih Pantai & Lihat Lokasi
+          </h4>
+
+          <!-- Dropdown -->
+          <select
+            id="pantaiSelect"
+            class="w-full p-3 mb-6 text-gray-700 text-sm font-medium rounded-xl bg-white border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200 ease-in-out hover:shadow-md cursor-pointer appearance-none"
+          >
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.123456789!2d111.123456789!3d-8.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79a123456789!2sPantai%20Karanggongso!5e0!3m2!1sid!2sid!4v1699999999999!5m2!1sid!2sid"
+            >
+              Pantai Karanggongso
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.258487191786!2d111.42527161477847!3d-8.062345490434934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79a4a50bde9b3d%3A0xe2d1f6c3d5a2f6e!2sPantai%20Prigi!5e0!3m2!1sid!2sid!4v1699999999999!5m2!1sid!2sid"
+            >
+              Pantai Prigi
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.987654321!2d111.987654321!3d-8.234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79a987654321!2sPantai%20Mutiara!5e0!3m2!1sid!2sid!4v1699999999999!5m2!1sid!2sid"
+            >
+              Pantai Mutiara
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.280784537323!2d111.45034497322925!3d-8.274827291759415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79408a952593df%3A0xc0afdcca6c9b50e6!2sPantai%20Konang!5e0!3m2!1sid!2sid!4v1762656433498!5m2!1sid!2sid"
+            >
+              Pantai Konang
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31582.94417671796!2d111.53681001083984!3d-8.315911499999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e793bfda63d702f%3A0x6319bfbf896b6d11!2sPantai%20Blado!5e0!3m2!1sid!2sid!4v1762666594023!5m2!1sid!2sid"
+            >
+              Pantai Blado
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15793.732123971027!2d111.4304365!3d-8.25962225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79404ebce9b19b%3A0x2243420965f820ff!2sPantai%20Taman%20Kili-kili!5e0!3m2!1sid!2sid!4v1762666831913!5m2!1sid!2sid"
+            >
+              Pantai Taman Kili-Kili
+            </option>
+            <option
+              value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3947.965770293652!2d111.4788239732298!3d-8.306200391729057!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e793f21dd2006bd%3A0x79b62208f0cdf1d6!2sPantai%20kerbau%20(kebo)!5e0!3m2!1sid!2sid!4v1762666880361!5m2!1sid!2sid"
+            >
+              Pantai Kebo
+            </option>
+          </select>
+
+          <!-- Map iframe -->
+          <div
+            class="w-full h-80 md:h-96 border-2 border-blue-200 rounded-2xl overflow-hidden shadow-md transition-shadow hover:shadow-xl"
+          >
+            <iframe
+              id="pantaiMap"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.258487191786!2d111.42527161477847!3d-8.062345490434934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79a4a50bde9b3d%3A0xe2d1f6c3d5a2f6e!2sPantai%20Prigi!5e0!3m2!1sid!2sid!4v1699999999999!5m2!1sid!2sid"
+              width="100%"
+              height="100%"
+              style="border: 0; transition: transform 0.3s"
+              allowfullscreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tips -->
+<section class="mt-14">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="rounded-2xl p-6 md:p-10 bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-xl flex flex-col md:flex-row items-center gap-6 hover:shadow-2xl transition duration-300"
+    >
+      <!-- Ikon atau ilustrasi -->
+      <div class="text-6xl md:text-7xl animate-bounce">
+        🧳
+      </div>
+
+      <!-- Konten teks -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-bold">Tips Perjalanan Terbaik</h3>
+        <ul class="mt-2 text-sm md:text-base opacity-90 space-y-1 list-disc list-inside">
+          <li>Bawa dokumen penting seperti KTP atau tiket.</li>
+          <li>Cek cuaca sebelum berangkat untuk persiapan yang matang.</li>
+          <li>Pilih akomodasi nyaman dekat lokasi pantai.</li>
+          <li>Gunakan alas kaki yang nyaman untuk jalan di pasir dan tebing.</li>
+          <li>Jangan lupa bawa kamera atau smartphone untuk menangkap momen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+    </main>
+
+    <!-- FOOTER -->
+<footer class="border-t border-blue-300 mt-10 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400">
+  <div
+    class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white"
+  >
+    <div class="text-sm opacity-90">
+      © <span id="year"></span> Gelombang Trenggalek • Semua hak dilindungi
+    </div>
+  </div>
+</footer>
+
+    <!-- LIGHTBOX MODAL -->
+    <div
+      id="lightbox"
+      class="fixed inset-0 hidden items-center justify-center z-50"
+    >
+      <div id="lbBackdrop" class="absolute inset-0 lb-backdrop"></div>
+      <div class="relative max-w-4xl mx-auto">
+        <button
+          onclick="closeLightbox()"
+          class="absolute top-3 right-3 z-50 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full"
+        >
+          ✕
+        </button>
+        <img
+          id="lbImage"
+          src=""
+          alt="Preview"
+          class="w-full h-auto rounded-xl"
+        />
+      </div>
+    </div>
+
+    <!-- SCRIPTS: menu & lightbox -->
+<script>
+  // === 📅 Menampilkan tahun otomatis di footer ===
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // === 📱 Toggle menu mobile (buka/tutup navbar) ===
+  const btnMenu = document.getElementById("btnMenu");
+  const mobileMenu = document.getElementById("mobileMenu");
+  btnMenu.addEventListener("click", () => {
+    if (mobileMenu.classList.contains("hidden")) {
+      // Jika menu tersembunyi → tampilkan dengan animasi slide-down
+      mobileMenu.classList.remove("hidden");
+      mobileMenu.classList.add("animate-slide-down");
+    } else {
+      // Jika sedang tampil → sembunyikan
+      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("animate-slide-down");
+    }
+  });
+
+  // === 🖼️ Fungsi untuk membuka lightbox gambar ===
+  function openLightbox(index) {
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImage");
+    lbImg.src = images[index] || images[0]; // Ganti gambar sesuai index
+    lb.classList.remove("hidden");
+    lb.classList.add("flex");
+    document.body.style.overflow = "hidden"; // Nonaktifkan scroll di belakang
+  }
+
+  // === ❌ Menutup lightbox ===
+  function closeLightbox() {
+    const lb = document.getElementById("lightbox");
+    lb.classList.remove("flex");
+    lb.classList.add("hidden");
+    document.body.style.overflow = ""; // Aktifkan scroll lagi
+  }
+
+  // Tutup lightbox jika backdrop diklik
+  document.getElementById("lbBackdrop").addEventListener("click", closeLightbox);
+
+  // Tutup lightbox jika tombol ESC ditekan
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
+
+  // === 🗺️ Ganti peta otomatis saat dropdown berubah ===
+  const select = document.getElementById("pantaiSelect");
+  const map = document.getElementById("pantaiMap");
+  select.addEventListener("change", function () {
+    map.src = this.value; // Ganti src iframe peta
+  });
+</script>
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak — Gelombang Trenggalek</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assests/img/Gelombang-laut.png"
+      sizes="32x32"
+    />
+    <link rel="icon" type="image/png" href="./assests/img/Gelombang-laut.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* 
+    Membuat animasi dengan nama "slideDown"
+    Efeknya: elemen muncul dari atas ke bawah dengan transisi halus
+  */
+      @keyframes slideDown {
+        0% {
+          opacity: 0; /* Awal animasi: elemen transparan */
+          transform: translateY(-10px); /* Awal posisi elemen sedikit naik */
+        }
+        100% {
+          opacity: 1; /* Akhir animasi: elemen terlihat penuh */
+          transform: translateY(0); /* Kembali ke posisi semula */
+        }
+      }
+
+      /* 
+    Kelas ini digunakan untuk menjalankan animasi slideDown 
+    saat elemen ditampilkan.
+  */
+      .animate-slide-down {
+        animation: slideDown 0.35s ease forwards; /* Durasi 0.35 detik, gerakan halus */
+      }
+    </style>
+  </head>
+
+  <body class="bg-gradient-to-b from-sky-50 to-white text-slate-800">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200"
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-white border-2 border-blue-500 flex items-center justify-center shadow-md relative"
+              >
+                <img
+                  src="./assests/img/Gelombang-laut.png"
+                  alt="Logo Gelombang Laut"
+                  class="w-6 h-6 relative z-10"
+                />
+              </div>
+              <div>
+                <a
+                  href="index.html"
+                  class="text-lg font-extrabold tracking-tight text-slate-800 hover:text-blue-600 transition-colors duration-300"
+                >
+                  Gelombang Trenggalek
+                </a>
+                <div class="text-xs text-slate-500 -mt-0.5">
+                  Wisata Pantai & Pesisir
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desktop Menu -->
+          <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="index.html" class="hover:text-blue-400">Beranda</a>
+            <a href="tentang.html" class="hover:text-blue-400">Tentang</a>
+            <a href="kontak.html" class="hover:text-blue-400">Kontak</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button
+              id="btnMenu"
+              class="p-2 rounded-md hover:bg-blue-50 transition"
+            >
+              <svg
+                id="iconMenu"
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown -->
+      <div
+        id="mobileMenu"
+        class="md:hidden hidden border-t border-blue-100 bg-white shadow-md"
+      >
+        <div class="px-4 py-3 space-y-3 text-blue-600">
+          <a href="index.html" class="block hover:text-blue-400 transition"
+            >Beranda</a
+          >
+          <a href="tentang.html" class="block hover:text-blue-400 transition"
+            >Tentang</a
+          >
+          <a href="kontak.html" class="block hover:text-blue-400 transition"
+            >Kontak</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="relative bg-gradient-to-r from-blue-600 to-blue-400 text-white py-20 px-4 text-center"
+    >
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">Hubungi Kami</h1>
+      <p class="max-w-2xl mx-auto text-blue-100">
+        Terhubung langsung dengan tim <strong>Gelombang Trenggalek</strong>.
+        Kami siap membantu Anda menjelajahi pesona pantai di Trenggalek!
+      </p>
+      <div
+        class="absolute inset-0 bg-[url('./assests/img/Pantai.png')] bg-cover bg-center opacity-20"
+      ></div>
+    </section>
+
+    <!-- Kontak Section -->
+    <section class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-5 gap-10">
+      <!-- Info Kontak (diperlebar) -->
+      <div class="md:col-span-3">
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Hubungi Kami</h2>
+        <div class="space-y-6 bg-white rounded-2xl shadow-md p-8">
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full text-xl"
+            >
+              📞
+            </div>
+            <div>
+              <p class="font-semibold text-slate-700">WhatsApp</p>
+              <a
+                href="https://wa.me/6281234567890"
+                target="_blank"
+                class="text-blue-500 hover:text-blue-700 transition"
+                >+62 858-7529-2061</a
+              >
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full text-xl"
+            >
+              ✉️
+            </div>
+            <div>
+              <p class="font-semibold text-slate-700">Email</p>
+              <a
+                href="mailto:info@gelombangtrenggalek.com"
+                class="text-blue-500 hover:text-blue-700 transition"
+                >gelombangtrenggalek@gmail.com</a
+              >
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-blue-100 rounded-full text-xl"
+            >
+              📍
+            </div>
+            <div>
+              <p class="font-semibold text-slate-700">Alamat</p>
+              <p class="text-slate-600 leading-relaxed">
+                Jl. Raya Durenan No.16, Kendal, Kendalrejo, Kec. Durenan,
+                Kabupaten Trenggalek, Jawa Timur 66381
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="md:col-span-2 flex flex-col">
+        <h2 class="text-2xl font-bold text-blue-700 mb-4">Lokasi Kami</h2>
+        <div
+          class="w-full h-80 rounded-2xl overflow-hidden shadow-md border-2 border-blue-200"
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.815167217816!2d111.79083667322692!3d-8.120293291909112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e791c3b38ccc2cb%3A0x886c0b6eb47b3b58!2sSMA%20Negeri%201%20Durenan!5e0!3m2!1sid!2sid!4v1762701493330!5m2!1sid!2sid"
+            width="100%"
+            height="100%"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="border-t border-blue-300 mt-10 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400"
+    >
+      <div
+        class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white"
+      >
+        <div class="text-sm opacity-90">
+          © <span id="year"></span> Gelombang Trenggalek • Semua hak dilindungi
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mengatur teks elemen dengan id "year" menjadi tahun saat ini (otomatis berubah setiap tahun)
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Mengambil elemen tombol menu (btnMenu) dan menu mobile (mobileMenu)
+      const btnMenu = document.getElementById("btnMenu");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      // Menambahkan event klik pada tombol menu
+      btnMenu.addEventListener("click", () => {
+        // Jika menu masih tersembunyi (punya class "hidden")
+        if (mobileMenu.classList.contains("hidden")) {
+          mobileMenu.classList.remove("hidden"); // Tampilkan menu (hapus class hidden)
+          mobileMenu.classList.add("animate-slide-down"); // Tambahkan animasi slide turun
+        }
+        // Jika menu sedang tampil
+        else {
+          mobileMenu.classList.add("hidden"); // Sembunyikan menu lagi
+          mobileMenu.classList.remove("animate-slide-down"); // Hapus animasi agar tidak diulang
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tentang Kami — Gelombang Trenggalek</title>
+    <!-- Logo favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="./assests/img/Gelombang-laut.png"
+      sizes="32x32"
+    />
+    <link rel="icon" type="image/png" href="./assests/img/Gelombang-laut.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Animasi untuk efek turun halus saat menu muncul */
+      @keyframes slideDown {
+        0% {
+          opacity: 0; /* Awal: transparan */
+          transform: translateY(-10px); /* Sedikit naik */
+        }
+        100% {
+          opacity: 1; /* Akhir: tampak jelas */
+          transform: translateY(0); /* Kembali ke posisi normal */
+        }
+      }
+
+      /* Kelas ini digunakan untuk memicu animasi slideDown */
+      .animate-slide-down {
+        animation: slideDown 0.35s ease forwards; /* Durasi 0.35 detik, transisi halus */
+      }
+    </style>
+  </head>
+
+  <body class="bg-gradient-to-b from-sky-50 to-white text-slate-800">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 backdrop-blur bg-white/60 border-b border-slate-200"
+    >
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-xl bg-white border-2 border-blue-500 flex items-center justify-center shadow-md relative"
+              >
+                <img
+                  src="./assests/img/Gelombang-laut.png"
+                  alt="Logo Gelombang Laut"
+                  class="w-6 h-6 relative z-10"
+                />
+              </div>
+              <div>
+                <a
+                  href="index.html"
+                  class="text-lg font-extrabold tracking-tight text-slate-800 hover:text-blue-600 transition-colors duration-300"
+                >
+                  Gelombang Trenggalek
+                </a>
+                <div class="text-xs text-slate-500 -mt-0.5">
+                  Wisata Pantai & Pesisir
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desktop Menu -->
+          <nav class="hidden md:flex items-center gap-6 text-sm">
+            <a href="index.html" class="hover:text-blue-400">Beranda</a>
+            <a href="tentang.html" class="hover:text-blue-400">Tentang</a>
+            <a href="kontak.html" class="hover:text-blue-400">Kontak</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button
+              id="btnMenu"
+              class="p-2 rounded-md hover:bg-blue-50 transition"
+            >
+              <svg
+                id="iconMenu"
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Dropdown -->
+      <div
+        id="mobileMenu"
+        class="md:hidden hidden border-t border-blue-100 bg-white shadow-md"
+      >
+        <div class="px-4 py-3 space-y-3 text-blue-600">
+          <a href="index.html" class="block hover:text-blue-400 transition"
+            >Beranda</a
+          >
+          <a href="tentang.html" class="block hover:text-blue-400 transition"
+            >Tentang</a
+          >
+          <a href="kontak.html" class="block hover:text-blue-400 transition"
+            >Kontak</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      class="relative bg-gradient-to-r from-blue-600 to-blue-400 text-white py-20 px-4 text-center"
+    >
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">
+        Tentang Gelombang Trenggalek
+      </h1>
+      <p class="max-w-2xl mx-auto text-blue-100">
+        Menyatu dengan keindahan laut, budaya, dan pesona pantai-pantai di
+        Trenggalek.
+      </p>
+      <div
+        class="absolute inset-0 bg-[url('./assests/img/Pantai.png')] bg-cover bg-center opacity-20"
+      ></div>
+    </section>
+
+    <!-- About Section -->
+    <section
+      class="max-w-5xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center"
+    >
+      <div>
+        <img
+          src="./assests/img/Gelombang-laut.png"
+          alt="Icon"
+          class="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-700 ease-out"
+        />
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-blue-700">Siapa Kami?</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          <strong>Gelombang Trenggalek</strong> adalah platform wisata yang
+          bertujuan memperkenalkan keindahan pantai-pantai di Kabupaten
+          Trenggalek. Kami menghadirkan informasi destinasi, galeri foto, dan
+          panduan bagi wisatawan untuk menjelajahi pesona alam pesisir selatan
+          Jawa Timur.
+        </p>
+        <p class="text-slate-600 leading-relaxed">
+          Dikelola oleh tim muda pecinta alam dan teknologi, kami ingin membawa
+          semangat <em>Explore Trenggalek</em> agar semakin banyak orang
+          mengenal keindahan laut, pasir, dan budaya lokal.
+        </p>
+      </div>
+    </section>
+
+    <!-- Visi Misi Section -->
+    <section class="bg-blue-50 py-16">
+      <div class="max-w-5xl mx-auto px-6 text-center">
+        <h2 class="text-2xl font-bold mb-8 text-blue-700">Visi & Misi</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+          <div
+            class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-500"
+          >
+            <h3 class="font-semibold text-blue-600 mb-2">🌅 Visi</h3>
+            <p class="text-slate-600">
+              Menjadikan Trenggalek sebagai destinasi wisata bahari unggulan di
+              Indonesia yang dikenal karena keindahan pantai dan keramahan
+              masyarakatnya.
+            </p>
+          </div>
+          <div
+            class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-500"
+          >
+            <h3 class="font-semibold text-blue-600 mb-2">🌊 Misi</h3>
+            <ul
+              class="text-slate-600 list-disc list-inside space-y-1 text-left"
+            >
+              <li>Mempromosikan keindahan pantai lokal secara digital.</li>
+              <li>Mendukung pariwisata berkelanjutan di wilayah pesisir.</li>
+              <li>
+                Menumbuhkan rasa bangga dan cinta terhadap kekayaan alam
+                Trenggalek.
+              </li>
+              <li>Menghubungkan wisatawan dengan masyarakat setempat.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tim Kami -->
+    <section class="max-w-6xl mx-auto px-6 py-20 text-center">
+      <h2 class="text-2xl font-bold mb-10 text-blue-700">Tim Kami</h2>
+
+      <div class="flex flex-wrap justify-center gap-10">
+        <div
+          class="bg-white rounded-2xl shadow-md p-6 w-64 hover:shadow-xl transition duration-500"
+        >
+          <img
+            src="./assests/img/dev1.jpeg"
+            alt="Developer 1"
+            class="w-24 h-24 object-cover rounded-full mx-auto mb-4"
+          />
+          <h3 class="font-semibold text-lg">GALIH SANTOSO PUTRA</h3>
+          <p class="text-sm text-slate-500">Web Developer</p>
+          <div class="flex justify-center gap-4 mt-2">
+            <a
+              href="https://wa.me/6285875292061"
+              target="_blank"
+              class="text-green-600 hover:text-green-900 transition"
+            >
+              <img
+                src="./assests/img/whatsapp-icon.png"
+                alt="WA"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="mailto:galihsantosa29@gmail.com"
+              class="text-green-600 hover:text-green-900 transition"
+            >
+              <img
+                src="./assests/img/email-icon.png"
+                alt="Email"
+                class="w-6 h-6"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-2xl shadow-md p-6 w-64 hover:shadow-xl transition duration-500"
+        >
+          <img
+            src="./assests/img/dev2.jpeg"
+            alt="Developer 2"
+            class="w-24 h-24 object-cover rounded-full mx-auto mb-4"
+          />
+          <h3 class="font-semibold text-lg">ATMANIKA NARAYA</h3>
+          <p class="text-sm text-slate-500">UI/UX Designer</p>
+          <div class="flex justify-center gap-4 mt-2">
+            <a
+              href="https://wa.me/6285784291168"
+              target="_blank"
+              class="text-green-600 hover:text-green-900 transition"
+            >
+              <img
+                src="./assests/img/whatsapp-icon.png"
+                alt="WA"
+                class="w-6 h-6"
+              />
+            </a>
+            <a
+              href="mailto:naraya20111998@gmail.com"
+              class="text-green-600 hover:text-green-900 transition"
+            >
+              <img
+                src="./assests/img/email-icon.png"
+                alt="Email"
+                class="w-6 h-6"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="border-t border-blue-300 mt-10 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400"
+    >
+      <div
+        class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-white"
+      >
+        <div class="text-sm opacity-90">
+          © <span id="year"></span> Gelombang Trenggalek • Semua hak dilindungi
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Menampilkan tahun otomatis di elemen dengan id="year"
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Ambil elemen tombol menu dan elemen menu mobile
+      const btnMenu = document.getElementById("btnMenu");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      // Tambahkan event saat tombol diklik
+      btnMenu.addEventListener("click", () => {
+        // Jika menu masih tersembunyi, tampilkan dengan animasi
+        if (mobileMenu.classList.contains("hidden")) {
+          mobileMenu.classList.remove("hidden"); // Hapus class "hidden" supaya menu muncul
+          mobileMenu.classList.add("animate-slide-down"); // Tambahkan animasi slide turun
+        }
+        // Jika menu sedang tampil, sembunyikan lagi
+        else {
+          mobileMenu.classList.add("hidden"); // Tambahkan class "hidden" supaya menu hilang
+          mobileMenu.classList.remove("animate-slide-down"); // Hapus animasi agar tidak aktif
+        }
+      });
+    </script>
+  </body>
+</html>
